@@ -3,8 +3,8 @@ FROM richardregeer/web-development:base
 LABEL maintainer "Richard Regeer" \
       email="rich2309@gmail.com"
 
-ENV PHP_VERSION 7.2.3
-ENV XDEBUG_VERSION 2_6_0
+ENV PHP_VERSION 7.2.4
+ENV XDEBUG_VERSION 2.6.0
 
 # Copy phpinfo test page and php configuration
 COPY ./phpinfo /usr/local/src/phpinfo
@@ -62,22 +62,27 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && make \
   && make install \
   && make clean \
-  && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-  && curl -LO https://github.com/xdebug/xdebug/archive/XDEBUG_$XDEBUG_VERSION.tar.gz \
-  && tar -xzf XDEBUG_$XDEBUG_VERSION.tar.gz \
-  && rm -rf xdebug-XDEBUG_$XDEBUG_VERSION.tar.gz \
-  && cd xdebug-XDEBUG_$XDEBUG_VERSION \
+  && apt-get clean \
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false build-essential autoconf pkg-config \
+  && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+
+# Install composer
+RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install php extensions
+RUN curl -LO https://github.com/xdebug/xdebug/archive/$XDEBUG_VERSION.tar.gz \
+  && tar -xzf $XDEBUG_VERSION.tar.gz \
+  && rm -rf $XDEBUG_VERSION.tar.gz \
+  && cd xdebug-$XDEBUG_VERSION \
   && phpize \
   && ./configure --enable-xdebug \
   && make \
   && make install \
   && cp modules/xdebug.so /usr/local/lib/php/extensions/ \
   && make clean \
-  && apt-get clean \
-  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false build-essential autoconf pkg-config \
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
 # Expose the ports for php info.
-EXPOSE 8000 
+EXPOSE 8000
 
 WORKDIR /development
