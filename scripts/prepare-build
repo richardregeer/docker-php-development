@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cp -Rv ${LANGUAGE}/etc/* "$VARIANT"
-cp -Rv ${LANGUAGE}/phpinfo "$VARIANT"/
+cp -Rv php/etc/* "$VARIANT"
+cp -Rv php/phpinfo "$VARIANT"/
 
 echo "Copied docker files"
