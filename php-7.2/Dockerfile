@@ -18,6 +18,7 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && cd /usr/local/src/php-$PHP_VERSION \
   && apt-get update \
   && apt-get install -y --no-install-recommends \
+    ca-certificates \
     build-essential \
     autoconf \
     pkg-config \
@@ -62,15 +63,9 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && make \
   && make install \
   && make clean \
-  && apt-get clean \
-  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false build-essential autoconf pkg-config \
-  && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
 
-# Install composer
-RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Install php extensions
-RUN curl -LO https://github.com/xdebug/xdebug/archive/$XDEBUG_VERSION.tar.gz \
+  # Install php extensions
+  && curl -LO https://github.com/xdebug/xdebug/archive/$XDEBUG_VERSION.tar.gz \
   && tar -xzf $XDEBUG_VERSION.tar.gz \
   && rm -rf $XDEBUG_VERSION.tar.gz \
   && cd xdebug-$XDEBUG_VERSION \
@@ -81,6 +76,9 @@ RUN curl -LO https://github.com/xdebug/xdebug/archive/$XDEBUG_VERSION.tar.gz \
   && cp modules/xdebug.so /usr/local/lib/php/extensions/ \
   && make clean \
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+
+# Install composer
+RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Expose the ports for php info.
 EXPOSE 8000
