@@ -1,0 +1,20 @@
+language: bash
+
+services: docker
+
+env:
+  - VARIANT=php-7.0
+  - VARIANT=php-7.1
+
+before_script:
+  - scripts/prepare-build
+  - cd "$VARIANT"
+  - image="richardregeer/web-development:${VARIANT}"
+
+script:
+  - docker build -t "$image" .
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker push "$image"
+
+after_script:
+- docker images
