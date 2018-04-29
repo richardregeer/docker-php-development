@@ -32,6 +32,13 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
     libedit-dev \
     libsqlite3-dev \
     libpq-dev \
+    libmemcached-dev \
+    libicu-dev \
+    librabbitmq-dev \
+    libc-client-dev \
+    libkrb5-dev \
+    libxslt-dev \
+    locales \
   && ./configure \
     --prefix=/usr/local \
     --mandir=/usr/local/man \
@@ -39,19 +46,26 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
     --with-config-file-scan-dir=/usr/local/etc/php.d \
     --disable-cgi \
     --enable-bcmath \
+    --enable-calendar \
     --enable-cli \
+    --enable-exif \
     --enable-ftp \
+    --enable-fpm \
     --enable-mbstring \
     --enable-pcntl \
     --enable-phar \
     --enable-shared \
+    --enable-soap \
+    --enable-sockets \
     --enable-zip \
     --enable-intl \
     --enable-mysqlnd \
     --with-bz2 \
     --with-curl \
     --with-iconv \
-    --with-mcrypt \
+    --with-imap \
+    --with-imap-ssl \
+    --with-kerberos \
     --with-openssl \
     --with-readline \
     --with-gettext \
@@ -59,23 +73,21 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
     --with-pdo-mysql \
     --with-pdo-sqlite \
     --with-pdo-pgsql \
+    --with-xmlrpc \
+    --with-xsl \
     --with-zlib \
   && make \
   && make install \
   && make clean \
-
   # Install php extensions
-  && curl -LO https://github.com/xdebug/xdebug/archive/$XDEBUG_VERSION.tar.gz \
-  && tar -xzf $XDEBUG_VERSION.tar.gz \
-  && rm -rf $XDEBUG_VERSION.tar.gz \
-  && cd xdebug-$XDEBUG_VERSION \
-  && phpize \
-  && ./configure --enable-xdebug \
-  && make \
-  && make install \
-  && cp modules/xdebug.so /usr/local/lib/php/extensions/ \
-  && make clean \
-  && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/*
+  && php --version \
+  && pecl update-channels \
+  && pecl install redis \
+  && pecl install xdebug \
+  && pecl install memcached \
+  && pecl install amqp \
+  && pecl install channel://pecl.php.net/mcrypt-1.0.1 \
+  && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* ~/.pearrc
 
 # Install composer
 RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
