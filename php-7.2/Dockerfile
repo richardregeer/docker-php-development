@@ -10,6 +10,7 @@ ENV XDEBUG_VERSION 2.6.0
 COPY ./phpinfo /usr/local/src/phpinfo
 COPY ./php.ini /usr/local/etc/php.ini
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
 
 # Install php, composer and xdebug
 RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror \
@@ -92,7 +93,6 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
 # Install composer
 RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Expose the ports for php info.
-EXPOSE 8000
+EXPOSE 8000 9000
 
 WORKDIR /development
