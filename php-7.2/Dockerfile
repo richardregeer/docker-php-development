@@ -9,7 +9,7 @@ ENV XDEBUG_VERSION 2.6.0
 # Copy phpinfo test page and php configuration
 COPY ./phpinfo /usr/local/src/phpinfo
 COPY ./php.ini /usr/local/etc/php.ini
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY ./xdebug.ini /usr/local/etc/php.d/xdebug.ini
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
 
 # Install php, composer and xdebug
@@ -82,6 +82,7 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && make clean \
   # Install php extensions
   && php --version \
+  && pecl config-set php_ini /usr/local/etc/php.ini \
   && pecl update-channels \
   && pecl install redis \
   && pecl install xdebug \
