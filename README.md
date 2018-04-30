@@ -26,14 +26,26 @@ Docker images available for versions:
     - mcrypt
     - openssl
     - readline
+    - redis
+    - memcached
+    - xdebug
+    - ampq
+    - soap
+    - imap
+    - imap-ssl
+    - kerberos
+    - calendar
+    - sockets
+    - xsl
+    - xmlrpc
     - gettext
     - mysqli
     - pdo-mysql
     - sqlite
     - pdo-pgsql
     - zlib
- - XDebug 2.5.5
- - composer
+ - PHP-Fpm    
+ - Composer
 
 For more information about the installed tools see the web development base image [readme](https://github.com/richardregeer/docker-web-development).
 
@@ -52,6 +64,9 @@ Make sure the -rm option is used to destroy the container when it's finished.
 ```bash
 # Start a php web application in the container.
 docker run -it --rm --volume=</path/to/your/code>:/development -p 8000:8000 richardregeer/web-development:php-<version> php -S 0.0.0.0:8000
+
+# Starting PHP-Fpm.
+docker run -it --rm -p 9000:9000 richardregeer/web-development:php-<version> php-fpm -F
 ```
 
 ### Start with XDebug
