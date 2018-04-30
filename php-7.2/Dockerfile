@@ -9,6 +9,7 @@ ENV XDEBUG_VERSION 2.6.0
 # Copy phpinfo test page and php configuration
 COPY ./phpinfo /usr/local/src/phpinfo
 COPY ./php.ini /usr/local/etc/php.ini
+COPY ./extensions.ini /usr/local/etc/php.d/extensions.ini
 COPY ./xdebug.ini /usr/local/etc/php.d/xdebug.ini
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
 
