@@ -94,7 +94,7 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && pecl install amqp \
   && pecl install channel://pecl.php.net/mcrypt-1.0.1 \
   && apt-get clean \
-  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false build-essential autoconf pkg-config \
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false autoconf pkg-config \
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* ~/.pearrc
 
 # Install composer
