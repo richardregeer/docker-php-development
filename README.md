@@ -8,7 +8,7 @@ Docker images available for versions:
 - [PHP7.1](./php-7.1)
 - [PHP7.2](./php-7.2)
 
-## Installed software:
+## Installed software for all php versions
  - PHP
     - bcmath
     - cli
@@ -44,6 +44,7 @@ Docker images available for versions:
     - sqlite
     - pdo-pgsql
     - zlib
+    - tideways
  - PHP-Fpm    
  - Composer
 

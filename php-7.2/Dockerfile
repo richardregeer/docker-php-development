@@ -18,6 +18,8 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && tar -C /usr/local/src -xf php-$PHP_VERSION.tar.gz \
   && rm php-$PHP_VERSION.tar.gz \
   && cd /usr/local/src/php-$PHP_VERSION \
+  && echo 'deb http://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages debian main' > /etc/apt/sources.list.d/tideways.list \
+  && curl -sS 'https://s3-eu-west-1.amazonaws.com/qafoo-profiler/packages/EEB5E8F4.gpg' | apt-key add - \
   && apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -82,6 +84,7 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && make install \
   && make clean \
   # Install php extensions
+  && DEBIAN_FRONTEND=noninteractive apt-get -y install tideways-php \
   && php --version \
   && pecl config-set php_ini /usr/local/etc/php.ini \
   && pecl update-channels \
@@ -90,6 +93,8 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && pecl install memcached \
   && pecl install amqp \
   && pecl install channel://pecl.php.net/mcrypt-1.0.1 \
+  && apt-get clean \
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false build-essential autoconf pkg-config \
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* ~/.pearrc
 
 # Install composer
