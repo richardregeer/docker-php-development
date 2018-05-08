@@ -77,6 +77,7 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
     --with-pdo-sqlite \
     --with-pdo-pgsql \
     --with-xmlrpc \
+    --with-mcrypt \
     --with-xsl \
     --with-zlib \
   && make \
@@ -91,7 +92,6 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && pecl install xdebug \
   && pecl install memcached \
   && pecl install amqp \
-  && pecl install channel://pecl.php.net/mcrypt-1.0.1 \
   && apt-get clean \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false autoconf pkg-config \
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* ~/.pearrc
