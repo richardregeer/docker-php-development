@@ -3,8 +3,7 @@ FROM richardregeer/web-development:base
 LABEL maintainer "Richard Regeer" \
       email="rich2309@gmail.com"
 
-ENV PHP_VERSION 7.2.4
-ENV XDEBUG_VERSION 2.6.0
+ENV PHP_VERSION 7.2.5
 
 # Copy phpinfo test page and php configuration
 COPY ./phpinfo /usr/local/src/phpinfo
@@ -13,7 +12,7 @@ COPY ./extensions.ini /usr/local/etc/php.d/extensions.ini
 COPY ./xdebug.ini /usr/local/etc/php.d/xdebug.ini
 COPY ./php-fpm.conf /usr/local/etc/php-fpm.conf
 
-# Install php, composer and xdebug
+# Install php
 RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.gz/from/this/mirror \
   && tar -C /usr/local/src -xf php-$PHP_VERSION.tar.gz \
   && rm php-$PHP_VERSION.tar.gz \
