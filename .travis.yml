@@ -3,8 +3,6 @@ language: bash
 services: docker
 
 env:
-  - VARIANT=php-7.0
-  - VARIANT=php-7.1
   - VARIANT=php-7.2
 
 before_script:
@@ -13,6 +11,7 @@ before_script:
   - image="richardregeer/web-development:${VARIANT}"
 
 script:
+  - if [ "$VARIANT" == "php-7.2" ]; then docker build -t "latest" .; fi
   - docker build -t "$image" .
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker push "$image"

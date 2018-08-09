@@ -4,8 +4,6 @@
 This container can be used for doing all your php web development needs. Like running unit tests, linting, creating coverage reports and running your application.
 
 Docker images available for versions:
-- [PHP7.0](./php-7.0)
-- [PHP7.1](./php-7.1)
 - [PHP7.2](./php-7.2)
 
 ## Installed software for all php versions
