@@ -3,7 +3,7 @@ FROM richardregeer/web-development:base
 LABEL maintainer "Richard Regeer" \
       email="rich2309@gmail.com"
 
-ENV PHP_VERSION 7.3.2
+ENV PHP_VERSION 7.3.5
 
 # Copy phpinfo test page and php configuration
 COPY ./phpinfo /usr/local/src/phpinfo
@@ -96,7 +96,11 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* ~/.pearrc
 
 # Install composer
-RUN  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN apt-get update \
+  && apt-get install ca-certificates openssl -y \
+  && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+  && apt-get clean \
+  && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/
 
 EXPOSE 8000 9000
 
