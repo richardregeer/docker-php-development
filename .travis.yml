@@ -5,7 +5,7 @@ services: docker
 env:
   - VARIANT=php-7.2
   - VARIANT=php-7.3
-
+  
 before_script:
   - scripts/prepare-build
   - cd "$VARIANT"

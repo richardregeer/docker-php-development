@@ -3,7 +3,7 @@ FROM richardregeer/web-development:base
 LABEL maintainer "Richard Regeer" \
       email="rich2309@gmail.com"
 
-ENV PHP_VERSION 7.2.27
+ENV PHP_VERSION 7.4.2
 
 # Copy phpinfo test page and php configuration
 COPY ./phpinfo /usr/local/src/phpinfo
@@ -22,7 +22,6 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && apt-get update \
   && apt-get install -y --no-install-recommends \
     ca-certificates \
-    openssl \
     build-essential \
     autoconf \
     pkg-config \
@@ -42,6 +41,7 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
     libc-client-dev \
     libkrb5-dev \
     libxslt-dev \
+    oniguruma \
     locales \
   && ./configure \
     --prefix=/usr/local \
@@ -92,7 +92,6 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
   && pecl install xdebug \
   && pecl install memcached \
   && pecl install amqp \
-  && pecl install channel://pecl.php.net/mcrypt-1.0.1 \
   && apt-get clean \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false autoconf pkg-config \
   && rm -rf /tmp/* /var/lib/apt/lists/* /var/tmp/* ~/.pearrc
