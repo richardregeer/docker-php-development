@@ -5,6 +5,7 @@ services: docker
 env:
   - VARIANT=php-7.2
   - VARIANT=php-7.3
+  - VARIANT=php-7.4
   
 before_script:
   - scripts/prepare-build
@@ -12,7 +13,7 @@ before_script:
   - image="richardregeer/web-development:${VARIANT}"
 
 script:
-  - if [ "$VARIANT" == "php-7.2" ]; then docker build -t "richardregeer/web-development:php" .; fi
+  - if [ "$VARIANT" == "php-7.4" ]; then docker build -t "richardregeer/web-development:php" .; fi
   - docker build -t "$image" .
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker push "$image"
