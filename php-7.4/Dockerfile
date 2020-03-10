@@ -41,7 +41,7 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
     libc-client-dev \
     libkrb5-dev \
     libxslt-dev \
-    oniguruma \
+    libonig-dev \
     locales \
   && ./configure \
     --prefix=/usr/local \
