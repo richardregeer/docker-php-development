@@ -5,6 +5,8 @@ This container can be used for doing all your php web development needs. Like ru
 
 Docker images available for versions:
 - [PHP7.2](./php-7.2)
+- [PHP7.3](./php-7.3)
+- [PHP7.4](./php-7.4)
 
 ## Installed software for all php versions
  - PHP
