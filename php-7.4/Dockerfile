@@ -48,6 +48,7 @@ RUN curl -o php-$PHP_VERSION.tar.gz -L http://php.net/get/php-$PHP_VERSION.tar.g
     --mandir=/usr/local/man \
     --with-config-file-path=/usr/local/etc \
     --with-config-file-scan-dir=/usr/local/etc/php.d \
+    --with-pear \
     --disable-cgi \
     --enable-bcmath \
     --enable-calendar \
