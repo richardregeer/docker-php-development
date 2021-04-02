@@ -1,0 +1,23 @@
+name: Build
+
+on: [pull_request]
+
+jobs:
+  build:
+    name: Tests PHP ${{ matrix.php-version }}
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        php-version: ['7.4']
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: scripts/prepare-build  
+
+      - name: Build 
+        run: |
+          cp -Rnv php/etc/* php-${{ matrix.php-version }}
+          cp -Rv php/phpinfo php-${{ matrix.php-version }}/
+          echo "Copied docker files"
+          cd php-${{ matrix.php-version }}
+          docker build -t richardregeer/web-development:${{ matrix.php-version }} .
